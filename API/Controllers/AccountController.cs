@@ -37,7 +37,8 @@ namespace API.Controllers
             var user = new AppUser 
             {
                 UserName = registerDto.Username,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.
+                    GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
             };
 
@@ -54,7 +55,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDot)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName ==
-            loginDot.Username);
+                loginDot.Username);
 
             if (user == null) return Unauthorized();
 
