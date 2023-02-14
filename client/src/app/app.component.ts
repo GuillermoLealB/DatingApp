@@ -12,21 +12,14 @@ export class AppComponent implements OnInit {
   title = 'client';
   users: any;
 
-  constructor(private http: HttpClient, private accountService: AccountService){ }
+  constructor(private accountService: AccountService){ }
 
 
   ngOnInit(): void {
-    this.getUser();
     this.setCurrentUser();
 
   }
-  getUser(){
-    this.http.get('http://localhost:5001/api/users').subscribe({
-      next: response => this.users = response,
-      error: error => console.log(error),
-      complete: ()=> console.log("Request Complete"),
-    })
-  }
+
 
   setCurrentUser(){
     const userString = localStorage.getItem('user');

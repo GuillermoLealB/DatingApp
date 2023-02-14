@@ -16,10 +16,20 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
       const user = response;
-      console.log(user)
       if(user){
         localStorage.setItem('user', JSON.stringify(user))  /// saving for local storage for maintain the session
-        //this.currentUserSource.next(user);
+        this.currentUserSource.next(user);
+        }
+      })
+    )
+  }
+
+  register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+      map(user => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
         }
       })
     )
@@ -30,6 +40,7 @@ export class AccountService {
   }
   logout(){
     localStorage.removeItem('user')
+    this.currentUserSource.next(null);
   }
 
 
